@@ -9,6 +9,7 @@ app.use(cors({
     credentials: true,
 }))
 
+app.use(express.json()); // add it myself
 // routes
 import userRouter from  './routes/user.routes.js';
 
