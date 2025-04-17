@@ -29,10 +29,15 @@ const useSchema = new Schema(
             type: String, // cloudinary url
             required: true,
         },
-        watchHistory: {
-            type: Schema.Types.ObjectId,
-            ref: "Video"
+        coverImage: {
+            type: String, // cloudinary url
         },
+        watchHistory: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Video"
+            }
+        ],
         password: {
             type: String,
             required: [true, 'Password is required']
@@ -41,7 +46,9 @@ const useSchema = new Schema(
             type: String,
         }
     }, 
-    {timestemps: true}
+    {
+        timestamps: true
+    }
 );
 
 useSchema.pre("save", async function(next){
