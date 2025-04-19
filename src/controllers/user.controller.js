@@ -142,6 +142,11 @@ const loginUser = asyncHandler(async (req, res)=>{
         sameSite: "lax", // or "strict"
     }
 
+    console.log("Sending cookies...");
+    console.log("AccessToken:", accessToken);
+    console.log("RefreshToken:", refreshToken);
+
+
     return res.status(200)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
@@ -156,7 +161,7 @@ const loginUser = asyncHandler(async (req, res)=>{
     )
 })
 
-const logoutUser = asyncHandler(async(res, req)=>{
+const logoutUser = asyncHandler(async(req, res) => {
     await User.findByIdAndUpdate(
         req.user._id,
         {
@@ -171,13 +176,13 @@ const logoutUser = asyncHandler(async(res, req)=>{
 
     const options = {
         httpOnly: true,
-        secure: true,
+        secure: true
     }
 
     return res
     .status(200)
-    .clearCookies("accessToken", options)
-    .clearCookies("refreshToken", options)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "User logged Out"))
 })   // it give me an error so, need to debug
 
