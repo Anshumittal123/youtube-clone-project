@@ -187,13 +187,13 @@ const logoutUser = asyncHandler(async(req, res) => {
 })   // it give me an error so, need to debug
 
 const refreshAccessToken = asyncHandler(async (req, res)=>{
+    const incomingRefreshToken  = req.cookies.refreshToken || req.body.refreshToken
+    
+    if(!incomingRefreshToken){
+        throw new ApiError(401, "unauthorized request")
+    }
+    
     try {
-        const incomingRefreshToken  = req.cookies.refreshToken || req.body.refreshToken
-    
-        if(!incomingRefreshToken){
-            throw new ApiError(401, "unauthorized request")
-        }
-    
         const decodedToken = jwt.verify(
             incomingRefreshToken,
             process.env.REFRESH_TOKEN_SECRET
